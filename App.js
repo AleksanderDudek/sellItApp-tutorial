@@ -1,9 +1,9 @@
 import { Navigation } from 'react-native-navigation';
 
 
-import LoginComponent from './src/Login';
-import HomeComponent from './src/Home';
-import AddPostComponent from './src/Admin/AddPost';
+import LoginComponent from './src/Components/Views/Login';
+import HomeComponent from './src/Components/Views/Home';
+import AddPostComponent from './src/Components/Views/Admin/AddPost';
 
 //in string value we pass whatever we want, but by 
 //convention it would be projectName.componentName
