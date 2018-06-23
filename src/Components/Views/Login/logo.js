@@ -33,9 +33,16 @@ class Logo extends Component {
     }
 
     render(){
+
+        console.log(this.props.orientation)
         return(
             <View>
-                <View style={styles.logoStyles}>
+                <View style={
+                    
+                    this.props.orientation === "portrait"
+                    ? styles.logoStylesPortrait 
+                    : styles.logoStylesLandscape
+                    }>
                    {/* container for animated elements */}
                     <Animated.View
                         style={{
@@ -63,13 +70,18 @@ class Logo extends Component {
 }
 
 const styles = StyleSheet.create({
-    logoStyles:{
+    logoStylesPortrait:{
       marginTop:50,
       flex: 1,
       flexDirection: 'row',
-      maxHeight: 100
-      
+      maxHeight: 100  
     }, 
+    logoStylesLandscape:{
+        marginTop:20,
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 100  
+      }, 
     sell:{
       fontSize: 40,
       fontFamily: 'RobotoCondensed-Regular',
