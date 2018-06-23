@@ -1,15 +1,37 @@
 import { Navigation } from 'react-native-navigation';
+import ConfigStore from './src/Components/Store/config'
+//bridge between store and react 
 
+import { Provider } from 'react-redux';
 
 import LoginComponent from './src/Components/Views/Login';
 import HomeComponent from './src/Components/Views/Home';
 import AddPostComponent from './src/Components/Views/Admin/AddPost';
 
+const store = ConfigStore();
+
 //in string value we pass whatever we want, but by 
 //convention it would be projectName.componentName
-Navigation.registerComponent("sellItApp.Login", ()=>LoginComponent);
-Navigation.registerComponent("sellItApp.Home", ()=>HomeComponent);
-Navigation.registerComponent("sellItApp.AddPost", ()=>AddPostComponent);
+Navigation.registerComponent(
+    "sellItApp.Login", 
+    ()=>
+    LoginComponent, 
+    store, 
+    Provider);
+
+Navigation.registerComponent(
+    "sellItApp.Home",
+    ()=>
+    HomeComponent,
+    store, 
+    Provider);
+
+Navigation.registerComponent(
+    "sellItApp.AddPost",
+    ()=>
+    AddPostComponent,
+    store, 
+    Provider);    
 
 //we need to export default start-up function 
 //this is where we decide what sort of architecture
