@@ -3,7 +3,7 @@ import { Navigation } from 'react-native-navigation';
 
 import LoginComponent from './src/Login';
 import HomeComponent from './src/Home';
-import AddPostComponent from './src/AddPost';
+import AddPostComponent from './src/Admin/AddPost';
 
 //in string value we pass whatever we want, but by 
 //convention it would be projectName.componentName
@@ -11,7 +11,18 @@ Navigation.registerComponent("sellItApp.Login", ()=>LoginComponent);
 Navigation.registerComponent("sellItApp.Home", ()=>HomeComponent);
 Navigation.registerComponent("sellItApp.AddPost", ()=>AddPostComponent);
 
-
+//we need to export default start-up function 
+//this is where we decide what sort of architecture
+//we choose (single screen / tab based app) 
+export default () => Navigation.startSingleScreenApp({
+    screen:{
+        screen:"sellItApp.Login",
+        title:"Login",
+        navigatorStyle:{
+            navBarHidden:true
+        }
+    }
+})
 
 //old component, default
 
