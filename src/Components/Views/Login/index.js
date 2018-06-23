@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
+
+import LoadTabs from '../Tabs';
 
 class LoginComponent extends Component {
   render() {
     return (
-      <Text>I am logged in</Text>
+      <View>
+        <Button
+        title="got ot home"
+        onPress={()=>{
+          LoadTabs();
+        }}
+        />
+      </View>
     );
   }
 }
