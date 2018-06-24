@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 import Input from '../../Utils/forms/inputs';
+import Validation from '../../Utils/forms/validationRules';
 
 class LoginForm extends Component {
 
@@ -16,7 +17,8 @@ class LoginForm extends Component {
                 value:"",
                 valid:false,
                 type:"textinput",
-                rule:{
+                rules:{
+                    isRequired:true,
                     isEmail:true
                 }
             },
@@ -24,7 +26,8 @@ class LoginForm extends Component {
                 value:"",
                 valid:false,
                 type:"textinput",
-                rule:{
+                rules:{
+                    isRequired:true,
                     minLength:6
                 }
             },
@@ -32,7 +35,8 @@ class LoginForm extends Component {
                 value:"",
                 valid:false,
                 type:"textinput",
-                rule:{
+                rules:{
+                    isRequired:true,
                     confirmPass:"password"
                 }
             }
@@ -50,6 +54,12 @@ class LoginForm extends Component {
         //copy's update
         formCopy[name].value = value;
 
+
+        let rules = formCopy[name].rules;
+        let valid = Validation(rules, value, formCopy);
+
+
+        console.log(valid);
         //why then copying form here?? 
         this.setState({
             form:formCopy
