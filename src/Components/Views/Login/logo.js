@@ -28,7 +28,7 @@ class Logo extends Component {
                 easing:Easing.easeOutCubic
             })
         ]).start(()=>{
-            alert("Done")
+            this.props.showLogin();
         })
     }
 
