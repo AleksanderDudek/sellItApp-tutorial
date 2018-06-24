@@ -39,10 +39,37 @@ class LoginPanel extends Component {
                     }}
                 >
                     <Image 
-                            style={styles.imageStyle}
+                            style={
+                                this.props.orientation === "portrait"
+                                ? styles.imageStylePortrait
+                                : styles.imageStyleLandscape
+                                }
                             source={BackImage}
                             resizeMode={'contain'}
                              />
+                </Animated.View>
+                <Animated.View
+                    style={{
+                        opacity: this.state.inputForm,
+                        top: this.state.inputForm.interpolate({
+                            inputRange:[0,1],
+                            outputRange:[100,30]
+                        })
+                    }}
+                >
+                    <Text>FORM</Text>
+                    <Text>FORM</Text>
+                    <Text>FORM</Text>
+                    <Text>FORM</Text>
+                    <Text>FORM</Text>
+                    <Text>FORM</Text>
+                    <Text>FORM</Text>
+                    <Text>FORM</Text>
+                    <Text>FORM</Text>
+                    <Text>FORM</Text>
+                    <Text>FORM</Text>
+                    <Text>FORM</Text>
+
                 </Animated.View>
             </View>
         )
@@ -50,9 +77,13 @@ class LoginPanel extends Component {
 }
 
 const styles = StyleSheet.create({
-    imageStyle:{
+    imageStylePortrait:{
         width:270,
         height:150
+    },
+    imageStyleLandscape:{
+        width:270,
+        height:0
     }
 })
 

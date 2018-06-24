@@ -46,7 +46,10 @@ class LoginComponent extends Component {
               showLogin={this.showLogin}
               orientation={this.state.orientation}
             />
-            <LoginPanel 
+            
+          </View>
+          <View style={styles.container}>
+          <LoginPanel 
             show={this.state.logoAnimation}
             orientation={this.state.orientation}
             />
