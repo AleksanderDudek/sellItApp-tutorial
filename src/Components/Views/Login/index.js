@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View,
   ScrollView, Button } from 'react-native';
 
-import { getOrientation, setOrientationListener, removeOrientationListener } from '../../Utils/misc';
+import { 
+  getOrientation, 
+  setOrientationListener, 
+  removeOrientationListener,
+  getPlatform
+} from '../../Utils/misc';
 import LoginPanel from './loginPanel';
 
 import LoadTabs from '../Tabs';
@@ -15,6 +20,7 @@ class LoginComponent extends Component {
 
     this.state = {
       // jesli jest wieksze/mniejsze od tego to zmieni orientacje obrazu
+      platform: getPlatform(),
       orientation: getOrientation(500),
       logoAnimation:false
     }
@@ -52,6 +58,7 @@ class LoginComponent extends Component {
           <LoginPanel 
             show={this.state.logoAnimation}
             orientation={this.state.orientation}
+            platform={this.state.platform}
             />
           </View>
       </ScrollView>
