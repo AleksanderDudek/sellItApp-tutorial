@@ -6,7 +6,7 @@ import Validation from '../../Utils/forms/validationRules';
 import LoadTabs from '../Tabs';
 
 import { connect } from 'react-redux';
-import { signUp } from '../../Store/Actions/user_actions';
+import { signUp, signIn } from '../../Store/Actions/user_actions';
 import { bindActionCreators } from 'redux';
 
 class LoginForm extends Component {
@@ -119,11 +119,12 @@ class LoginForm extends Component {
 
             if(this.state.type === "Login")
             {
-
+                this.props.signIn(formToSubmit).then(()=>{
+                    console.log(this.props.User + "login")
+                })
             } else {
                 this.props.signUp(formToSubmit).then(()=>{
                     console.log(this.props.User)
-                    return true;
                 })
             }
                
@@ -234,7 +235,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({signUp},dispatch);
+    return bindActionCreators({signUp, signIn},dispatch);
 }
 
 // export default LoginForm;
