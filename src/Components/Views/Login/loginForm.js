@@ -3,6 +3,11 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 
 import Input from '../../Utils/forms/inputs';
 import Validation from '../../Utils/forms/validationRules';
+import LoadTabs from '../Tabs';
+
+import { connect } from 'react-redux';
+import { signUp } from '../../Store/Actions/user_actions';
+import { bindActionCreators } from 'redux';
 
 class LoginForm extends Component {
 
@@ -58,6 +63,7 @@ class LoginForm extends Component {
         let rules = formCopy[name].rules;
         let valid = Validation(rules, value, formCopy);
 
+        formCopy[name].valid = valid;
 
         console.log(valid);
         //why then copying form here?? 
@@ -66,7 +72,7 @@ class LoginForm extends Component {
         })
     }
 
-confirmPassword = () => (
+    confirmPassword = () => (
     this.state.type != 'Login' ? 
         <Input 
             placeholder="Confirm your password"
@@ -76,7 +82,7 @@ confirmPassword = () => (
             secureTextEntry
         />
     :null
-)
+    )
 
     changeFormType = () => {
         const type = this.state.type;
@@ -87,6 +93,61 @@ confirmPassword = () => (
 
         })
     }
+
+    submitUser = () => {
+
+        console.log('in submit')
+        let isFormValid = true;
+        let formToSubmit = {};
+        const formCopy = this.state.form;
+
+        for(let key in formCopy){
+
+            if(this.state.type === 'Login'){
+                if(key != 'confirmPassword'){
+                    isFormValid = isFormValid && formCopy[key].valid;
+                    formToSubmit[key] = formCopy[key].value;
+                }
+            } else {
+                isFormValid = isFormValid && formCopy[key].valid;
+                formToSubmit[key] = formCopy[key].value;
+            }
+        }
+
+        if(isFormValid){
+            console.log(formToSubmit)
+
+            if(this.state.type === "Login")
+            {
+
+            } else {
+                this.props.signUp(formToSubmit).then(()=>{
+                    console.log(this.props.User)
+                    return true;
+                })
+            }
+               
+
+        } else {
+            console.log("invalid")
+
+            this.setState({
+                hasErrors:true
+            })
+        }
+    }
+
+    //watch out for parentesis!!! use () instead of {} if you only return sth
+    formHasErrors = () => (
+        this.state.hasErrors ? 
+          <View style={styles.errorContainer}>
+              <Text style={styles.errorLabel}> Oops, some errors! </Text>
+          </View>  
+        : null
+    )
+        
+        
+   
 
     render(){
         return(
@@ -109,6 +170,7 @@ confirmPassword = () => (
                 />
 
                 {this.confirmPassword()}
+                {this.formHasErrors()}
 
                 <View style={
                     this.props.platform === "android"
@@ -118,7 +180,7 @@ confirmPassword = () => (
                     <Button 
                         title={this.state.action}
                         color="#fd9727"
-                        onPress={()=> alert("action")}
+                        onPress={this.submitUser}
                     />
                 </View>
                 <View style={{
@@ -134,7 +196,7 @@ confirmPassword = () => (
                     <Button 
                         title="I'll do it later"
                         color="lightgrey"
-                        onPress={()=> alert("action")}
+                        onPress={()=> LoadTabs()}
                     />
                 </View>
             </View>
@@ -152,7 +214,28 @@ const styles = StyleSheet.create({
     },
     buttonStyleIos: {
         marginBottom: 0
+    },
+    errorContainer: {
+        marginBottom: 20,
+        marginTop: 10
+    },
+    errorLabel: {
+        color:'red',
+        fontFamily: 'Roboto-Black'
     }
 })
 
-export default LoginForm;
+//needed for redux
+
+function mapStateToProps(state){
+    return{
+        User: state.user
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({signUp},dispatch);
+}
+
+// export default LoginForm;
+export default connect(mapStateToProps,mapDispatchToProps)(LoginForm);
