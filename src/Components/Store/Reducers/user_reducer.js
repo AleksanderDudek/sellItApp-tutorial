@@ -26,7 +26,7 @@ export default function(state={},action){
                 refToken:action.payload.refreshToken || false
             }
         }
-    break;
+        break;
         default:
             return state
     }

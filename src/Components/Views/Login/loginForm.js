@@ -8,6 +8,7 @@ import LoadTabs from '../Tabs';
 import { connect } from 'react-redux';
 import { signUp, signIn } from '../../Store/Actions/user_actions';
 import { bindActionCreators } from 'redux';
+import { setTokens, getTokens } from '../../Utils/misc';
 
 class LoginForm extends Component {
 
@@ -94,6 +95,19 @@ class LoginForm extends Component {
         })
     }
 
+    manageAccess = () => {
+        if(!this.props.User.userData.uid){
+            this.setState({hasErrors:true});
+        } else {
+            //store data in phone
+            setTokens(this.props.User.userData, ()=>{
+                console.log("works")
+                this.setState({hasErrors:false});
+                LoadTabs();
+            });
+        }
+    };
+
     submitUser = () => {
 
         console.log('in submit')
@@ -120,11 +134,13 @@ class LoginForm extends Component {
             if(this.state.type === "Login")
             {
                 this.props.signIn(formToSubmit).then(()=>{
-                    console.log(this.props.User + "login")
+                    console.log(this.props.User + " login")
+                    this.manageAccess();
                 })
             } else {
                 this.props.signUp(formToSubmit).then(()=>{
                     console.log(this.props.User)
+                    this.manageAccess();
                 })
             }
                
@@ -149,6 +165,12 @@ class LoginForm extends Component {
         
         
    
+    componentDidMount(){
+
+        getTokens((values)=>{
+            console.log(values);
+        })
+    }
 
     render(){
         return(
@@ -230,7 +252,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state){
     return{
-        User: state.user
+        User: state.User
     }
 }
 
