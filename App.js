@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import LoginComponent from './src/Components/Views/Login';
 import HomeComponent from './src/Components/Views/Home';
 import AddPostComponent from './src/Components/Views/Admin/AddPost';
+import SidedrawerComponent from './src/Components/Views/Sidedrawer';
 
 const store = ConfigStore();
 
@@ -32,6 +33,13 @@ Navigation.registerComponent(
     AddPostComponent,
     store, 
     Provider);    
+
+Navigation.registerComponent(
+    "sellItApp.Sidedrawer",
+    ()=>
+    SidedrawerComponent,
+    store, 
+    Provider);
 
 //we need to export default start-up function 
 //this is where we decide what sort of architecture
