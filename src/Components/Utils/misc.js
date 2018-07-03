@@ -90,3 +90,28 @@ export const navigatorDeepLink = (event, $this) => {
         }
     }
 }
+
+export const gridTwoColumns = (list) => {
+    let newArticles = [];
+    let articles = list;
+
+    let count = 1;
+    let vessel = {};
+
+    if(articles){
+        articles.forEach(element => {
+            if(count === 1){
+                vessel["blockOne"] = element;
+                count++;
+            } else {
+                vessel["blockTwo"] = element;
+                newArticles.push(vessel);
+
+                count = 1;
+                vessel = {};
+            }
+        });
+    }
+
+    return newArticles;
+}
