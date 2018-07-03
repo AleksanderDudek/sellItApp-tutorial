@@ -8,6 +8,7 @@ import LoginComponent from './src/Components/Views/Login';
 import HomeComponent from './src/Components/Views/Home';
 import AddPostComponent from './src/Components/Views/Admin/AddPost';
 import SidedrawerComponent from './src/Components/Views/Sidedrawer';
+import UserPostsComponent from './src/Components/Views/Admin/UserPosts';
 
 const store = ConfigStore();
 
@@ -38,6 +39,13 @@ Navigation.registerComponent(
     "sellItApp.Sidedrawer",
     ()=>
     SidedrawerComponent,
+    store, 
+    Provider);
+
+Navigation.registerComponent(
+    "sellItApp.UserPosts",
+    ()=>
+    UserPostsComponent,
     store, 
     Provider);
 
