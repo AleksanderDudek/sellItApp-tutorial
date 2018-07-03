@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getArticles } from '../../Store/Actions/articles_actions';
-
+import BlockItem from './blockItem';
 import { navigatorDrawer, navigatorDeepLink, gridTwoColumns } from '../../Utils/misc'
 import HorizontalScroll from './horizontal_scroll_icons';
 
@@ -51,6 +51,16 @@ class HomeComponent extends Component {
     })
   }
 
+  showArticles = () => (
+
+    this.state.articles.map( (item, i) => (
+      <BlockItem key={`columnHome-${i}`} 
+      item={item}
+      iteration={i}
+      />
+    ))
+  )
+
   render() {
     return (
       <ScrollView>
@@ -69,6 +79,13 @@ class HomeComponent extends Component {
             </View> 
             : null
           }
+          <View style={styles.articleContainer}>
+            <View style={{flex:1}}>
+              {this.showArticles()}
+            </View>
+          </View>
+
+
         </View>
       </ScrollView>
     );
@@ -83,6 +100,12 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems: 'center',
     marginTop: 50
+  },
+  articleContainer:{
+    padding: 10,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 });
 
