@@ -51,12 +51,17 @@ class HomeComponent extends Component {
     })
   }
 
+  goToArticleHandler = (props) => {
+    alert('got ato alert')
+  }
+
   showArticles = () => (
 
     this.state.articles.map( (item, i) => (
       <BlockItem key={`columnHome-${i}`} 
       item={item}
       iteration={i}
+      goto={this.goToArticleHandler}
       />
     ))
   )

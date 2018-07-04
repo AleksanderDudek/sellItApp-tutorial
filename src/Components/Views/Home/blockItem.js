@@ -28,7 +28,7 @@ const BlockItem = (props) => {
     const block = ({item, i}) => (
         <View style={styles.blockRow}>
             <TouchableOpacity
-            onPress={() => alert('post go')}
+            onPress={() => props.goto(item.blockOne)}
             style={{flex:2}}>
 
             <View>
@@ -38,7 +38,7 @@ const BlockItem = (props) => {
 
             </TouchableOpacity>
             <TouchableOpacity
-            onPress={() => alert('post go')}
+            onPress={() => props.goto(item.blockTwo)}
             style={{flex:2}}>
 
              <View>
@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection: 'row',
         marginBottom: 5,
-        justifyContent: 'space-between'
+        justifyContent : 'space-between'
+
     },
     itemImage:{
         width:'100%',
