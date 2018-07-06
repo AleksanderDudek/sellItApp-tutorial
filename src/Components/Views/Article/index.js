@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, Linking } from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -41,13 +41,17 @@ const Article = (props) => {
                 name='envelope-o'
                 color='#00ADA9'
                 backgroundColor='#ffffff'
-                onPress={()=> alert('contact')}
+                onPress={()=> openEmail()}
             >
                 <Text
                 >{props.ArticleData.email}</Text>
             </Icon.Button>
         </View>
     )
+
+    const openEmail = () => {
+        Linking.openURL(`mailto:${props.ArticleData.email}?subject=Regarding ${props.ArticleData.title}&body=I want that stuff!`)
+    }
 
     return (
         <ScrollView style={styles.articleContainer}>
