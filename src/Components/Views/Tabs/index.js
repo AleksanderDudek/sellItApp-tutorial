@@ -27,7 +27,7 @@ const navLeftButton = (sources) => {
 }
 
 //all logic for creating tabs
-const LoadTabs = () => {
+const LoadTabs = (allow) => {
 
     //all has to be done before it goes further
     Promise.all([
@@ -52,7 +52,7 @@ const LoadTabs = () => {
                 },
                 {
                     //same name as before project.name
-                    screen:"sellItApp.AddPost",
+                    screen: allow ? "sellItApp.AddPost" : "sellItApp.NotAllow",
                     label:"Add Post Sell It",
                     title:"Add Post Sell It Title",
                     //android needs it 

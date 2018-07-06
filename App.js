@@ -10,7 +10,7 @@ import AddPostComponent from './src/Components/Views/Admin/AddPost';
 import SidedrawerComponent from './src/Components/Views/Sidedrawer';
 import UserPostsComponent from './src/Components/Views/Admin/UserPosts';
 import ArticleComponent from './src/Components/Views/Article';
-
+import NotAllowComponent from './src/Components/Views/Admin/AddPost/noallow';
 
 const store = ConfigStore();
 
@@ -56,7 +56,14 @@ Navigation.registerComponent(
     ()=>
     ArticleComponent,
     store, 
-    Provider);    
+    Provider);  
+
+Navigation.registerComponent(
+    "sellItApp.NotAllow",
+    ()=>
+    NotAllowComponent,
+    store, 
+    Provider);
 
 //we need to export default start-up function 
 //this is where we decide what sort of architecture

@@ -60,7 +60,7 @@ class LoginComponent extends Component {
             }
             else {
               setTokens(this.props.User.userData, () =>{
-                LoadTabs()
+                LoadTabs(true)
               })
             }
             })
