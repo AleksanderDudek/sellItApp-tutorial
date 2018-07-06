@@ -9,6 +9,8 @@ import HomeComponent from './src/Components/Views/Home';
 import AddPostComponent from './src/Components/Views/Admin/AddPost';
 import SidedrawerComponent from './src/Components/Views/Sidedrawer';
 import UserPostsComponent from './src/Components/Views/Admin/UserPosts';
+import ArticleComponent from './src/Components/Views/Article';
+
 
 const store = ConfigStore();
 
@@ -48,6 +50,13 @@ Navigation.registerComponent(
     UserPostsComponent,
     store, 
     Provider);
+
+Navigation.registerComponent(
+    "sellItApp.Article",
+    ()=>
+    ArticleComponent,
+    store, 
+    Provider);    
 
 //we need to export default start-up function 
 //this is where we decide what sort of architecture

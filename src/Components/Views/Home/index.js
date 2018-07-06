@@ -52,7 +52,21 @@ class HomeComponent extends Component {
   }
 
   goToArticleHandler = (props) => {
-    alert('got ato alert')
+    this.props.navigator.push({
+      screen: 'sellItApp.Article',
+      animationType: 'slide-horizontal',
+      passProps:{
+        ArticleData: props
+      },
+      backButtonTitle:'Back to Home',
+      navigatorStyle:{
+        navBarTextFontSize: 20,
+        navBarTextColor: '#ffffff',
+        navBarTextFontFamily: 'RobotoCondensed-Bold',
+        navBarBackgroundColor: '#00ADA9',
+        screenBackgroundColor: '#ffffff'
+      }
+    })
   }
 
   showArticles = () => (
