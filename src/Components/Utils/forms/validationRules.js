@@ -16,6 +16,9 @@ const validation = (rules, value, form) => {
             case "minLength":
                 valid = valid && validateMinLength(value,rules[rule])
                 break;
+            case "maxLength":
+                valid = valid && validateMaxLength(value,rules[rule])
+                break;
             case "confirmPass":
                 valid = valid && validateConfirmPass(value,form[rules.confirmPass].value)
                 break;
@@ -40,6 +43,13 @@ const validateEmail = email => {
 
 const validateMinLength = (value, ruleVal) => {
     if(value.length >= ruleVal){
+        return true;
+    }
+    return false;
+}
+
+const validateMaxLength = (value, ruleVal) => {
+    if(value.length <= ruleVal){
         return true;
     }
     return false;
