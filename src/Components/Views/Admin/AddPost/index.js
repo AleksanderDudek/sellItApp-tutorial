@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View,
-   Button, ScrollView } from 'react-native';
+   Button, ScrollView, Modal } from 'react-native';
 
 import { navigatorDrawer } from '../../../Utils/misc';
 
@@ -19,8 +19,11 @@ class AddPostComponent extends Component {
   }
 
   state = {
+    errorsArray:[],
     loading:false,
     hasErrors:false,
+    modalVisible:false,
+    modalSuccess:false,
     form:{
         category:{
             value:"",
@@ -30,7 +33,8 @@ class AddPostComponent extends Component {
             options:['Select a category','Sports', 'Music', 'Clothing', 'Electronics'],
             rules:{
                 isRequired:true,
-            }
+            },
+            errorMsg:"You need to select a category"
         },
         title:{
           value:"",
@@ -41,7 +45,9 @@ class AddPostComponent extends Component {
               isRequired: true,
               maxLength: 40,
               minLength: 10
-            }
+            },
+            errorMsg:"You need to enter a title, max of 50 characters"
+        
         },
         description:{
           value:"",
@@ -52,7 +58,9 @@ class AddPostComponent extends Component {
             isRequired: true,
             maxLength: 200,
             minLength: 80
-          }
+          },
+          errorMsg:"You need to enter description 80-200 charcters"
+      
         },
         price:{
           value:"",
@@ -62,7 +70,9 @@ class AddPostComponent extends Component {
           rules:{
             isRequired: true,
             maxLength: 6
-          }
+          },
+          errorMsg:"You need to add maxium of 6-digit length number"
+      
         },
         email:{
           value:"",
@@ -72,7 +82,9 @@ class AddPostComponent extends Component {
           rules:{
             isRequired: true,
             isEmail: true
-          }
+          },
+          errorMsg:"You need to enter valid email"
+      
         }
 
 
@@ -115,12 +127,66 @@ class AddPostComponent extends Component {
 
       if(isFormValid){
         console.log(dataToSubmit)
+        this.setState({
+          modalSuccess: true
+        })
       } else {
         console.log('invalid form')
+
+        let errorsArray = [];
+
+        for(let key in formCopy){
+          if(!formCopy[key].valid){
+            errorsArray.push(formCopy[key].errorMsg)
+          }
+        }
+
+        console.log(errorsArray)
+        this.setState({
+          loading: false,
+          hasErrors: true,
+          errorsArray,
+          modalVisible: true
+        })
       }
 
   }
 
+  showErrorsArray = (errors) => (
+    errors ? 
+      errors.map((item, i) => (
+        <Text key={i} style={styles.errorItem}> - {item} </Text>
+      )
+  ) 
+  :null
+)
+
+clearErrors = () => {
+  this.setState({
+    hasErrors: false,
+    errorsArray: [],
+    modalVisible: false
+  })
+}
+
+
+resetSellitScreen = () => {
+  const formCopy = this.state.form;
+
+  for(let key in formCopy){
+    formCopy[key].valid = false;
+    formCopy[key].value = "";
+  }
+
+  this.setState({
+    modalSuccess: false,
+    hasErrors: false,
+    errorsArray: [],
+    loading: false
+  })
+
+  //dispatch action to clear the store
+}
   render() {
     return (
       <ScrollView>
@@ -217,6 +283,42 @@ class AddPostComponent extends Component {
   /> 
   : null
 }
+
+<Modal
+  animationType="slide"
+  visible={this.state.modalVisible}
+  onRequestClose={()=>{}}
+>
+  <View style={{padding:20}}>
+  {this.showErrorsArray(this.state.errorsArray)}
+  <Button
+    title="Got it!"
+    onPress={this.clearErrors}
+  />
+  </View>
+
+</Modal>
+
+
+<Modal
+  animationType="slide"
+  visible={this.state.modalSuccess}
+  onRequestClose={()=>{}}
+>
+  <View style={{padding:20}}>
+    <Text>GOOOD JOOOB :) </Text>
+  <Button
+    title="Got it!"
+    onPress={() => {
+      this.resetSellitScreen();
+      this.props.navigator.switchToTab({
+        tabIndex:0
+      })
+    }}
+  />
+  </View>
+
+</Modal>
       </ScrollView>
     );
   }
@@ -251,6 +353,12 @@ const styles = StyleSheet.create({
     padding: 10,
     minHeight: 100,
   },
+  errorItem:{
+    fontFamily: 'Roboto-Black',
+    fontSize: 16,
+    color:'red',
+    marginBottom: 10
+  }
   
 });
 
