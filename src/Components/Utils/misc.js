@@ -44,7 +44,7 @@ export const setTokens = (values, cb) => {
 
     const dateNow = new Date();
     //3600 * 1000 miliseconds
-    const expiration = dateNow.getTime() + (3600 * 1000);
+    const expiration = dateNow.getTime() + (900 * 1000);
 
     AsyncStorage.multiSet([
         ['@sellItApp@token', values.token],

@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     },
     ownerNfo:{
         marginTop: 30,
+        marginBottom: 30,
         paddingTop: 10,
         borderTopColor: 'lightgrey',
         borderTopWidth: 1

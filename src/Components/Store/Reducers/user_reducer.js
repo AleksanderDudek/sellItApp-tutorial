@@ -1,7 +1,9 @@
 import {
     REGISTER_USER,
     SIGN_USER,
-    AUTO_SIGN_IN
+    AUTO_SIGN_IN,
+    GET_USER_POSTS,
+    DELETE_USER_POST
 } from '../types';
 
 
@@ -37,6 +39,18 @@ export default function(state={},action){
                     refToken:action.payload.refresh_token || false
                 }
             }
+        break;
+        case GET_USER_POSTS:
+        return {
+            ...state,
+            userPosts: action.payload
+        }
+        break;
+        case DELETE_USER_POST:
+        return {
+            ...state,
+            ...action.payload
+        }
         break;
         default:
             return state

@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View,
    Button, ScrollView, Modal } from 'react-native';
 
-import { navigatorDrawer } from '../../../Utils/misc';
+import { navigatorDrawer, getTokens, setTokens } from '../../../Utils/misc';
 
 import Input from '../../../Utils/forms/inputs';
 import Validation from '../../../Utils/forms/validationRules';
+
+import { connect } from 'react-redux';
+import { addArticle, resetArticle } from '../../../Store/Actions/articles_actions';
+import { autoSignIn } from '../../../Store/Actions/user_actions';
+import { bindActionCreators } from 'redux';
 
 class AddPostComponent extends Component {
 
@@ -126,10 +131,51 @@ class AddPostComponent extends Component {
       }
 
       if(isFormValid){
-        console.log(dataToSubmit)
+
         this.setState({
-          modalSuccess: true
-        })
+          loading: true
+        });
+
+        getTokens((value) =>{
+          console.log(value)
+          const dateNow = new Date();
+          const expiration = dateNow.getTime();
+          const form = {
+            ...dataToSubmit,
+            uid: value[3][1]
+          }
+
+          if(expiration > value[2][1]){
+            // alert('auto sign in');
+            this.props.autoSignIn(value[1][1]).then(()=>{
+              setTokens(this.props.User.userData, ()=>{
+                this.props.addArticle(form, this.props.User.userData.token)
+                .then(()=>{
+                  this.setState({
+                    modalSuccess: true
+                  })
+                })
+              })
+            })
+
+          } else {
+            // alert('post the article')
+            console.log('just passing data')
+            this.props.addArticle(form, this.props.User.userData.token)
+            .then(()=>{
+              this.setState({
+                modalSuccess: true
+              })
+            })
+          }
+
+        });
+
+
+        console.log(dataToSubmit)
+  
+
+
       } else {
         console.log('invalid form')
 
@@ -186,6 +232,7 @@ resetSellitScreen = () => {
   })
 
   //dispatch action to clear the store
+  this.props.resetArticle();
 }
   render() {
     return (
@@ -362,4 +409,16 @@ const styles = StyleSheet.create({
   
 });
 
-export default AddPostComponent;
+function mapStateToProps(state){
+  return{
+    Articles: state.Articles,
+    User: state.User
+  };
+}
+
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({addArticle,autoSignIn, resetArticle}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPostComponent);
+
