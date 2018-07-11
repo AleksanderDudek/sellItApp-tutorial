@@ -54,7 +54,13 @@ class UserPosts extends Component {
     deletePost = (ID) => {
         this.props.deleteUserPost(ID, this.props.User.userData)
         .then(()=>{
+            const UID = this.props.User.userData.uid;
+            this.props.getUserPosts(UID);
 
+            this.setState({
+                modal:false,
+                toDelete: ''
+            })
         })
     }
 

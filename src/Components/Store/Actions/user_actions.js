@@ -8,7 +8,7 @@ import {
 
 import axios from 'axios';
 
-import { SIGNUP, SIGNIN, REFRESH, FIREBASEURL } from '../../Utils/misc';
+import { SIGNUP, SIGNIN, REFRESH, FIREBASEURL, setTokens } from '../../Utils/misc';
 
 export function signIn(data){
 
@@ -111,11 +111,31 @@ export const deleteUserPost = (POSTID, USERDATA) => {
 
             const request = axios({
                 method:'DELETE',
-                url: `${URL}?auth=${USERDATA.token}`
+                url: `${URL}?auth=${USERDATA.token}ss`
             }).then( response => {
                 resolve({deletePost:true})
             }).catch( e => {
+                const signIn = autoSignIn(USERDATA.refToken);
 
+                signIn.payload.then( response => {
+                    let newToken = {
+                        token: response.id_token,
+                        refToken: response.refresh_token,
+                        uid: response.user_id
+                    };
+
+                    setTokens(newToken, () =>{
+                        axios({
+                            method:'DELETE',
+                            url: `${URL}?auth=${USERDATA.token}`
+                        })
+                        .then(()=>{               
+                            resolve({
+                            userData: newToken,
+                            deletePost:true})
+                     })
+                    });
+                })
             })
     })
 
