@@ -40,13 +40,6 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
-# Gradle
-/build/
-/RNTester/android/app/build/
-/RNTester/android/app/gradle/
-/RNTester/android/app/gradlew
-/RNTester/android/app/gradlew.bat
-/ReactAndroid/build/
 
 # Buck
 .buckd
@@ -58,12 +51,6 @@ buck-out
 # Watchman
 .watchmanconfig
 
-# Android
-.idea
-.gradle
-local.properties
-*.iml
-/android/
 
 # Node
 node_modules
@@ -115,14 +102,6 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
-
-# Android/IntelliJ
-#
-build/*
-.idea
-.gradle
-local.properties
-*.iml
 
 # node.js
 #
